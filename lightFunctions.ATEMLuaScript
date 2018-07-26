@@ -1,0 +1,44 @@
+-- Invocation: ledLightColourControl(red, green, blue, frequency/pwm)
+-- r, g and b are integer values of the colour required.
+--
+-- The frequency code is connected to a set value for a divisor which controls
+-- the amount of time the led is on/off using pwm.
+-- codes:
+-- 1 = 1
+-- 2 = 8
+-- 3 = 64
+-- 4 = 256
+-- 5 = 1024
+
+function ledLightColourControl(r, g, b, f)
+    -- setup for udp
+    local socket = require "socket"
+    local udp = socket.udp()
+    local port = 8888
+    local address = "<LocalIP>" --set a local ip to match the one in the Arduino code
+
+    -- construct packets
+    local rmsg = string.format("%s%d%02x","r", f, r)
+    local gmsg = string.format("%s%d%02x","g", f, g)
+    local bmsg = string.format("%s%d%02x","b", f, b)
+
+    --  send the packets
+    udp:settimeout(0)
+    udp:setpeername(address, port)
+
+    -- loop to ensure packets are sent
+    for i=3,1,-1
+    do
+      udp:send(rmsg) --sends red the command
+      udp:send(gmsg) --sends green the command
+      udp:send(bmsg) --sends blue the command
+    end
+
+    --  log the msgs in justmacros
+    VSLog( rmsg );
+    VSLog( gmsg );
+    VSLog( bmsg );
+end;
+
+--test
+--ledLightColourControl(255, 255, 255, 1);
