@@ -1,5 +1,8 @@
 # RGBcontroller
-RGB LED controller written for a video production studio at the University of Sussex
+RGB LED controller written for a video production studio at the University of Sussex.
+This is a partial showcase of the project (hence the lack of commits) as the main version 
+is on a private repo for confidentiality.
+This public repo is to show the main aspects of the project.
 
 ## Project Overview
 
